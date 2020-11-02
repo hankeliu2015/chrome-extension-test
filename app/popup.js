@@ -9,11 +9,18 @@ function byAlphabeticalURLOrder(tab1, tab2) {
 
 chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT}, (tabs) => {
   tabs.sort(byAlphabeticalURLOrder);
-  
+
+  chrome.tabs.move(tabs[0].id, {index: 0});
+
   document.write(`<h3>The tabs you're on are:</h3>`);
   document.write('<ul>');
   for (let i = 0; i < tabs.length; i++) {
     document.write(`<li>${tabs[i].url}</li>`);
   }
   document.write('</ul>');
+
+  for (let i = 0; i < tabs.length; i++) {
+    chrome.tabs.move(tabs[i].id, {index: i});
+  }
+
 });
